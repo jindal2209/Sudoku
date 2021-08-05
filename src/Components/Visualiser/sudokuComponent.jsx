@@ -4,7 +4,7 @@ import './sudokuComponent.css';
 
 export function Sudoku() {
 	var [grid, setGrid] = useState([]);
-	var [sudokuGrid, setSudokuGrid] = useState([]);
+	// var [sudokuGrid, setSudokuGrid] = useState([]);
 
 	function resetGrid() {
 		var arr = [];
@@ -32,7 +32,7 @@ export function Sudoku() {
 			numarr.push(snumarr)
 			arr.push(sarr)
 		}
-		setSudokuGrid(numarr)
+		// setSudokuGrid(numarr)
 		setGrid(arr);
 	}
 
@@ -40,25 +40,28 @@ export function Sudoku() {
 		resetGrid();
 	}, [])
 
+	function handleGridChange(g) {
+		console.log('hihuil');
+		setGrid([...g])
+	}
+
 	function handleChange() {
 		var ele = document.querySelectorAll('.element-block');
+		var argrid = [...grid];
 		for (var i = 0; i < ele.length; i++) {
 			var r = parseInt(i / 9);
 			var c = parseInt(i % 9);
-			sudokuGrid[r][c] = ele[i].value
-		}
-		var argrid = grid;
-		for (i = 0; i < 9; i++) {
-			for (var j = 0; j < 9; j++) {
-				argrid[i][j].val = sudokuGrid[i][j];
-			}
+			if (ele[i].value === '')
+				argrid[r][c].val = ''
+			else
+				argrid[r][c].val = parseInt(ele[i].value)
 		}
 		setGrid([...argrid])
 	}
 
 	function solve() {
-		var myg = sudoku(sudokuGrid);
-		console.log(myg);
+		var myg = sudoku(grid, handleGridChange);
+		// setGrid([...myg])
 	}
 
 	return (
@@ -67,7 +70,7 @@ export function Sudoku() {
 				<ul>
 					<li><a className='heading' href="#home">Sudoku Solver</a></li>
 					<li style={{ float: 'right' }}>
-						<a style={{ padding: '5px' }} href="https://github.com/jindal2209/nqueen" target='_blank' rel='noreferrer' >
+						<a style={{ padding: '5px' }} href="https://github.com/jindal2209/Sudoku" target='_blank' rel='noreferrer' >
 							<img style={{ width: '70px' }} src={process.env.PUBLIC_URL + "/iff.png"} alt='myGithub' />
 						</a>
 					</li>
